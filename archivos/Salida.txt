@@ -1,0 +1,50 @@
+---------DATOS INICIALES DE LA SIMULACION---------
+ 
+Cantidad de tiempo a simular: 20
+Cantidad maxima de clientes en sistema: 8
+Cantidad servidores: 11
+Costo de tiempo de servicio: 2
+Costo de tiempo de espera: 2
+Costo de servidor ocupado: 2
+Costo de servidor desocupado: 2
+Costo de servidor en tiempo extra: 2
+Costo en operacion normal: 2
+Costo en sistema en tiempo extra: 0
+------------------------------------------------------
+
+
+
+Cantidad de clientes que no esperan: 1
+
+Cantidad de clientes que se van sin ser antendidos: 2
+
+Probabilidad de esperar: 0.7777777777777778
+
+Cantidad promedio de clientes en sistema: 1.619047619047619
+
+Cantidad promedio de clientes en cola: 0.6190476190476191
+
+Tiempo promedio de un cliente en sistema: 3.3333333333333335
+
+Tiempo promedio de un cliente en cola: 1.3333333333333333
+
+
+ Porcentaje de utilizacion del servidor 0 0.0% 
+
+ 
+ Porcentaje total: 0.0 %
+
+
+------------COSTOS-----------------
+
+SISTEMA: 
+  Costo operacion normal del sistema: 
+  Costo operacion extra del sistema: 
+SERVIDORES: 
+
+  Costo del servidor 0 estando ocupado: 0.0
+  Costo del servidor 0 estando desocupado: 2.0
+
+CLIENTES: 
+  Costo de tiempo en servicio del cliente: 6.666666666666667
+  Costo de tiempo en espera del cliente: 2.6666666666666665
