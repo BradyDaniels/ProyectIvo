@@ -70,6 +70,8 @@ public class Entrada extends javax.swing.JFrame {
         TF_CostoSisTExtra = new javax.swing.JTextField();
         TF_CostoONormal = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        Cargar_Datos = new javax.swing.JButton();
+        Guardar_Datos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -237,6 +239,20 @@ public class Entrada extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Verdana", 2, 14)); // NOI18N
         jLabel3.setText("Ingrese los datos solicitados a continuacion: ");
 
+        Cargar_Datos.setText("Cargar");
+        Cargar_Datos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Cargar_ArchivoDatos(evt);
+            }
+        });
+
+        Guardar_Datos.setText("Guardar");
+        Guardar_Datos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                guardar_ArchivoEntrada(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -317,12 +333,20 @@ public class Entrada extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(Cargar_Servicio)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(58, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(354, 354, 354))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(379, 379, 379)
+                .addComponent(Cargar_Datos)
+                .addGap(18, 18, 18)
+                .addComponent(Guardar_Datos)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(30, 30, 30)
@@ -334,7 +358,11 @@ public class Entrada extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addGap(49, 49, 49)
+                .addGap(20, 20, 20)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Cargar_Datos)
+                    .addComponent(Guardar_Datos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -452,6 +480,62 @@ public class Entrada extends javax.swing.JFrame {
     
     }//GEN-LAST:event_Click_EmpezarSimulacion
 
+    private void Cargar_ArchivoDatos(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Cargar_ArchivoDatos
+        // TODO add your handling code here:
+         ManejoArchivo M=new ManejoArchivo();
+         M.leerArchivoTm();
+         this.TF_TiempoSimulacion.setText(Integer.toString(M.tm));
+         M.leerArchivoMaxC();
+         System.out.println(M.MaxC);
+         this.TF_NumClientes.setText(Integer.toString(M.MaxC));
+         M.leerArchivoMaxS();
+         this.TF_NumServidores.setText(Integer.toString(M.MaxS));
+         M.leerArchivoCostoTS();
+         this.TF_CostoTS.setText(Integer.toString(M.CostoTS));
+         M.leerArchivoCostoTW();
+         this.TF_CostoTW.setText(Integer.toString(M.CostoTW));
+         M.leerArchivoCostoSO();
+         this.TF_CostoOcupado.setText(Integer.toString(M.CostoSO));
+         M.leerArchivoCostoSDO();
+         this.TF_CostoDesocupado.setText(Integer.toString(M.CostoSDO));
+         M.leerArchivoCostoTExtra();
+         this.TF_CostoTExtra.setText(Integer.toString(M.CostoTExtra));
+         M.leerArchivoCostoOPNormal();
+         this.TF_CostoONormal.setText(Integer.toString(M.CostoOPNormal));
+         M.leerArchivoCostoSisExtra();
+         this.TF_CostoSisTExtra.setText(Integer.toString(M.CostoSisExtra));
+         
+    }//GEN-LAST:event_Cargar_ArchivoDatos
+
+    private void guardar_ArchivoEntrada(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_guardar_ArchivoEntrada
+        // TODO add your handling code here:
+        ManejoArchivo M=new ManejoArchivo();
+        M.guardarArchivo(
+          "Tm\n"
+          +this.TF_TiempoSimulacion.getText()+"\n"
+          +"MaxC\n"
+          +this.TF_NumClientes.getText()+"\n"
+          +"MaxS\n"
+          +this.TF_NumClientes.getText()+"\n"        
+          +"CostoTS\n"
+          +this.TF_CostoTS.getText()+"\n"
+          +"CostoTW\n"
+          +this.TF_CostoTW.getText()+"\n"
+          +"CostoSO\n"
+          +this.TF_CostoOcupado.getText()+"\n"
+          +"CostoSDO\n"
+          +this.TF_CostoDesocupado.getText()+"\n"
+          +"CostoExtra\n"
+          +this.TF_CostoTExtra.getText()+"\n"
+          +"CostoOPNormal\n"
+          +this.TF_CostoONormal.getText()+"\n"
+          +"CostoSisExtra\n"
+          +this.TF_CostoSisTExtra.getText()+"\n"  
+          +"Tiempo entre Llegadas\n"
+          +"Tiempo de Servicio\n"      
+        );
+    }//GEN-LAST:event_guardar_ArchivoEntrada
+
     /**
      * @param args the command line arguments
      */
@@ -488,8 +572,10 @@ public class Entrada extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Cargar_Datos;
     private javax.swing.JButton Cargar_Llegada;
     private javax.swing.JButton Cargar_Servicio;
+    private javax.swing.JButton Guardar_Datos;
     private javax.swing.JTextField TF_CostoDesocupado;
     private javax.swing.JTextField TF_CostoONormal;
     private javax.swing.JTextField TF_CostoOcupado;

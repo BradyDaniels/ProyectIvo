@@ -47,6 +47,7 @@ public class EstadisticasCostos {
     Double resul_SisTiempoExtra=0.0;
     ArrayList<Double> resulCostoPUOcupado = new ArrayList<Double>();
     ArrayList<Double> resulCostoPUDesocupado = new ArrayList<Double>();
+    ArrayList <Double> CostoSTiempoExtra= new ArrayList<Double>(); 
     
     
     public EstadisticasCostos(int Max_Tm,int Max_C,int numServers,int costoTS,int costoTW,int costoOcupado,int costoDesocupado,int costoTiempoE,int costoOPnormal,int costoSisTiempoExtra,String uni){
@@ -57,6 +58,7 @@ public class EstadisticasCostos {
             this.porcentajeUtilizacion.add(0.0);
             this.lista_STDesocupado.add(0);
             this.lista_STOcupado.add(0);
+            this.CostoSTiempoExtra.add(0.0);
         }
         this.costo_TS=costoTS;
         this.costo_TW=costoTW;
@@ -66,6 +68,18 @@ public class EstadisticasCostos {
         this.costo_OpNormal=costoOPnormal;
         this.costo_SisTiempoExtra=costoSisTiempoExtra;
         this.Unidad=uni;
+    }
+    
+    public void calcularSisOPNormal(int tm){
+      this.resul_OpNormal=this.costo_OpNormal*tm*1.0;
+    }
+    
+    public void setTSExtra(int s,int tm_extra){
+       this.CostoSTiempoExtra.set(s,this.costo_TiempoExtra*(tm_extra*1.0-this.Tm_max*1.0));
+    }
+    
+    public void calcularTExtraSistema(int tm_extra){
+        this.resul_SisTiempoExtra=this.costo_SisTiempoExtra*(tm_extra*1.0-this.Tm_max*1.0);
     }
     
     public void setNoAtendidos(int cant){
@@ -176,8 +190,9 @@ public class EstadisticasCostos {
     public String getCostoUtilizacion(){
        String a="\n";
        for(int i=0;i<this.numSer;i++){
-         a=a+"  Costo del servidor "+i+" estando ocupado: "+this.resulCostoPUOcupado.get(i)+"\n";
-         a=a+"  Costo del servidor "+i+" estando desocupado: "+this.resulCostoPUDesocupado.get(i)+"\n";
+         a=a+"  Costo del servidor "+i+" estando ocupado: "+this.resulCostoPUOcupado.get(i)+" $/"+this.Unidad+"\n";
+         a=a+"  Costo del servidor "+i+" estando desocupado: "+this.resulCostoPUDesocupado.get(i)+" $/"+this.Unidad+"\n";
+         a=a+"  Costo del servidor "+i+" en tiempo extra: "+this.CostoSTiempoExtra.get(i)+" $/"+this.Unidad+"\n";
          a=a+"\n";
        }
        return a;
@@ -216,13 +231,13 @@ public class EstadisticasCostos {
               +"\n"+this.getUtilizacion()
               +"\n\n------------COSTOS-----------------\n"
               +"\nSISTEMA: \n"
-              +"  Costo operacion normal del sistema: \n"
-              +"  Costo operacion extra del sistema: \n"
+              +"  Costo operacion normal del sistema:"+this.resul_OpNormal +" $/"+this.Unidad+"\n"
+              +"  Costo operacion extra del sistema:"+this.resul_SisTiempoExtra+" $/"+this.Unidad+"\n" 
               +"SERVIDORES: \n"
               +this.getCostoUtilizacion()
               +"CLIENTES: \n" 
-              +"  Costo de tiempo en servicio del cliente: "+this.resul_TS+"\n"
-              +"  Costo de tiempo en espera del cliente: "+this.resul_TW; 
+              +"  Costo de tiempo en servicio del cliente: "+this.resul_TS+" $/"+this.Unidad+"\n"
+              +"  Costo de tiempo en espera del cliente: "+this.resul_TW+" $/"+this.Unidad+"\n"; 
     
     }
             

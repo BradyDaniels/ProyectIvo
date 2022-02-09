@@ -32,7 +32,8 @@ public class Sistema {
        this.Archivo_TS=ATS;
        for(int i=0;i<=cant_servidores-1;i++){
         this.variables.addServidor(true);
-        this.evento.setDT(999);
+        //this.evento.setDT(999);
+        this.evento.setDT(tm+1);
        }
        this.EC=E;
        
@@ -53,21 +54,24 @@ public class Sistema {
     };
     
     public void ComenzarSimulacion(){
-       int indexCliente=0,cantCTotal=0;
+       int indexCliente=0,cantCTotal=0,cantCEnServicio=0;
        Clientes actualCliente = null,nextCliente=null,salidaCliente=null;
        int cantCola=0,cantSinEspera=0;
-       int tm=0,prev_tm=0;
+       int tm=0,prev_tm=0,t_extra=this.tm_max,c_max=this.max_clientes;
        Proceso proceso=new Proceso();
        proceso.setVisible(true);
        do{
+           
+        if(this.max_clientes==0)
+            c_max=this.variables.getCantClientes()+1;
         
         if(indexCliente==0)
          actualCliente=new Clientes(indexCliente,Archivo_TELL.getTiempo(this.numA.generarNumero()),Archivo_TS.getTiempo(this.numA.generarNumero()));
         //PROCESO DE ENTRADA
-        if((this.evento.getAT()<this.evento.nextSalida() 
+        if((this.evento.getAT()<this.evento.nextSalida(t_extra) 
            //&& indexCliente<this.max_clientes     
-           //&& tm<this.tm_max
-           && this.variables.getCantClientes()<this.max_clientes
+           &&this.evento.getAT()<this.tm_max
+           && this.variables.getCantClientes()<c_max
            )
            //||
            //(this.evento.getAT()<this.evento.nextSalida() 
@@ -105,6 +109,7 @@ public class Sistema {
              //}
            }
            else{
+            cantCEnServicio=cantCEnServicio+1;   
             cantSinEspera=cantSinEspera+1;   
             this.variables.upCantClientes();
             this.variables.setStatusServidor(indexServer,false);
@@ -173,14 +178,16 @@ public class Sistema {
         }
         //PROCESO DE SALIDA
         else{
-          int indexS=this.evento.nextExit();
+          int indexS=this.evento.nextExit(t_extra);
+       
+         
 
           salidaCliente=searchClientInServer(indexS);
           
           salidaCliente.setNroS(-2);
           
           prev_tm=tm;
-          tm=this.evento.nextSalida();
+          tm=this.evento.nextSalida(t_extra);
           this.variables.setTM(tm);
           if(this.variables.getCantClientes()!=0){
                EC.Acumular_L((tm-prev_tm)*this.variables.getCantClientes());
@@ -190,7 +197,7 @@ public class Sistema {
           
           this.variables.susCantClientes();
           
-          if(!this.Lista_espera.isEmpty()){
+          if(!this.Lista_espera.isEmpty() && tm<=this.tm_max){
             Clientes clienteCola=this.Lista_espera.get(0);//Obtiene el primer cliente de la cola
             this.Lista_espera.remove(0);//Remueve el cliente de la cola
             clienteCola.setNroS(indexS);
@@ -205,7 +212,11 @@ public class Sistema {
             this.evento.updateDT(indexS,clienteCola.getTS()+tm);
           }
           else{
-            this.evento.updateDT(indexS,999);
+            if(tm>=this.tm_max){
+               this.EC.setTSExtra(indexS,tm);
+            }  
+            cantCEnServicio=cantCEnServicio-1;   
+            this.evento.updateDT(indexS,t_extra+1);
             this.variables.setStatusServidor(indexS,true);
             EC.setTiempoOcupado(indexS,tm-EC.getTiempoDesocupado(indexS));
           }
@@ -245,10 +256,16 @@ public class Sistema {
         }    
            
         this.num_evento=this.num_evento+1;
-     
-        
+        /*
+         if(tm>=this.tm_max && cantCEnServicio>0 ){
+             System.out.println("Tiempo extra clientes aun en servicio: "+cantCEnServicio);
+             t_extra=t_extra+5;
+          }
+         else if(tm>=this.tm_max && cantCEnServicio<1){
+            t_extra=this.tm_max;
+         }*/
            
-       }while(tm<=this.tm_max); //&& (this.variables.getCantClientes()!=0 || !this.Lista_espera.isEmpty())); //&& indexCliente<this.max_clientes);
+       }while(tm<=t_extra); //&& (this.variables.getCantClientes()!=0 || !this.Lista_espera.isEmpty())); //&& indexCliente<this.max_clientes);
        
   
        
@@ -266,6 +283,8 @@ public class Sistema {
        EC.Calcular_W(cantCTotal+1);
        EC.Calcular_Wq(cantCTotal+1);
        EC.CalcularEspera(cantCTotal+1,cantCola);
+       EC.calcularTExtraSistema(tm);
+       EC.calcularSisOPNormal(tm);
        EC.setCantSinEspera(cantSinEspera);
        EC.setCantCola(cantCola);
        EC.setNoAtendidos(this.variables.getWL());

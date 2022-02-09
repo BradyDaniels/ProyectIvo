@@ -70,8 +70,8 @@ public class Evento {
       this.lista_DT.add(dt);
     }
     
-    public int nextSalida(){
-       int nextD = 999;
+    public int nextSalida(int tm){
+       int nextD =tm+1;
        for(int i=0;i<this.lista_DT.size();i++){
            if(this.lista_DT.get(i)<nextD)
               nextD=this.lista_DT.get(i);
@@ -88,8 +88,8 @@ public class Evento {
        return nextA;
     }
     
-    public int nextExit(){
-       int nextD = 999;
+    public int nextExit(int tm){
+       int nextD =tm+1;
        int indexS = 0;
        for(int i=0;i<this.lista_DT.size();i++){
            if(this.lista_DT.get(i)<nextD){

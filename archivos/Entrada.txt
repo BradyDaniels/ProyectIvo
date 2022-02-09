@@ -1,3 +1,23 @@
+Tm
+30
+MaxC
+0
+MaxS
+2
+CostoTS
+10
+CostoTW
+6
+CostoSO
+8
+CostoSDO
+9
+CostoTExtra
+10
+CostoOPNormal
+9
+CostoSisExtra
+10
 Tiempos entre Llegadas
 1 30
 2 20

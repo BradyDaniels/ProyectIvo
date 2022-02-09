@@ -2,49 +2,56 @@
  
 Cantidad de tiempo a simular: 20
 Cantidad maxima de clientes en sistema: 8
-Cantidad servidores: 11
+Cantidad servidores: 3
 Costo de tiempo de servicio: 2
 Costo de tiempo de espera: 2
 Costo de servidor ocupado: 2
 Costo de servidor desocupado: 2
 Costo de servidor en tiempo extra: 2
 Costo en operacion normal: 2
-Costo en sistema en tiempo extra: 0
+Costo en sistema en tiempo extra: 2
 ------------------------------------------------------
 
 
 
-Cantidad de clientes que no esperan: 1
+Cantidad de clientes que no esperan: 6
 
-Cantidad de clientes que se van sin ser antendidos: 2
+Cantidad de clientes que se van sin ser antendidos: 0
 
-Probabilidad de esperar: 0.7777777777777778
+Probabilidad de esperar: 0.2222222222222222
 
-Cantidad promedio de clientes en sistema: 1.619047619047619
+Cantidad promedio de clientes en sistema: 1.4285714285714286
 
-Cantidad promedio de clientes en cola: 0.6190476190476191
+Cantidad promedio de clientes en cola: 0.09523809523809523
 
 Tiempo promedio de un cliente en sistema: 3.3333333333333335
 
-Tiempo promedio de un cliente en cola: 1.3333333333333333
+Tiempo promedio de un cliente en cola: 0.2222222222222222
 
 
- Porcentaje de utilizacion del servidor 0 0.0% 
+ Porcentaje de utilizacion del servidor 0 71.42857142857143% 
+
+ Porcentaje de utilizacion del servidor 1 61.904761904761905% 
 
  
- Porcentaje total: 0.0 %
+ Porcentaje total: 133.33333333333334 %
 
 
 ------------COSTOS-----------------
 
 SISTEMA: 
-  Costo operacion normal del sistema: 
-  Costo operacion extra del sistema: 
+  Costo operacion normal del sistema:42.0
+  Costo operacion extra del sistema:2.0
 SERVIDORES: 
 
-  Costo del servidor 0 estando ocupado: 0.0
-  Costo del servidor 0 estando desocupado: 2.0
+  Costo del servidor 0 estando ocupado: 1.4285714285714286
+  Costo del servidor 0 estando desocupado: 0.5714285714285714
+  Costo del servidor 0 en tiempo extra: 0.0
+
+  Costo del servidor 1 estando ocupado: 1.2380952380952381
+  Costo del servidor 1 estando desocupado: 0.7619047619047619
+  Costo del servidor 1 en tiempo extra: 2.0
 
 CLIENTES: 
   Costo de tiempo en servicio del cliente: 6.666666666666667
-  Costo de tiempo en espera del cliente: 2.6666666666666665
+  Costo de tiempo en espera del cliente: 0.4444444444444444
