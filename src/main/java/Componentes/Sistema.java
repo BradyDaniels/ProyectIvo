@@ -63,7 +63,7 @@ public class Sistema {
        do{
            
         if(this.max_clientes==0)
-            c_max=this.variables.getCantClientes()+1;
+            c_max=this.variables.getCantClientes()+5;
         
         if(indexCliente==0)
          actualCliente=new Clientes(indexCliente,Archivo_TELL.getTiempo(this.numA.generarNumero()),Archivo_TS.getTiempo(this.numA.generarNumero()));
@@ -162,17 +162,17 @@ public class Sistema {
           System.out.println("cant_Wq: "+EC.Cant_Wq);
           System.out.println("--------------------------");
           
-          
-          proceso.RegistrarEvento("\n");
-          proceso.RegistrarEvento("-----EVENTO------");
-          proceso.RegistrarEvento("NroEvento: "+Integer.toString(this.num_evento)+"/ LLEGADA / NroCliente:"+Integer.toString(actualCliente.getNro())+"/");
-          proceso.RegistrarEvento("-----VARIABLES DEL SISTEMA-----");
-          proceso.RegistrarEvento(this.variables.stringVariables());
-          proceso.RegistrarEvento("------LISTA DE EVENTOS-------");
-          proceso.RegistrarEvento(this.evento.printATDT());
-          proceso.RegistrarEvento("-------------FIN---------------- ");
-          proceso.RegistrarEvento("\n");
-          
+          if(this.num_evento<=20){
+            proceso.RegistrarEvento("\n");
+            proceso.RegistrarEvento("-----EVENTO------");
+            proceso.RegistrarEvento("NroEvento: "+Integer.toString(this.num_evento)+"/ LLEGADA / NroCliente:"+Integer.toString(actualCliente.getNro())+"/");
+            proceso.RegistrarEvento("-----VARIABLES DEL SISTEMA-----");
+            proceso.RegistrarEvento(this.variables.stringVariables());
+            proceso.RegistrarEvento("------LISTA DE EVENTOS-------");
+            proceso.RegistrarEvento(this.evento.printATDT());
+            proceso.RegistrarEvento("-------------FIN---------------- ");
+            proceso.RegistrarEvento("\n");
+          }
           indexCliente=indexCliente+1;
           actualCliente=nextCliente;
         }
@@ -197,7 +197,7 @@ public class Sistema {
           
           this.variables.susCantClientes();
           
-          if(!this.Lista_espera.isEmpty() && tm<=this.tm_max){
+          if(!this.Lista_espera.isEmpty()){
             Clientes clienteCola=this.Lista_espera.get(0);//Obtiene el primer cliente de la cola
             this.Lista_espera.remove(0);//Remueve el cliente de la cola
             clienteCola.setNroS(indexS);
@@ -244,15 +244,17 @@ public class Sistema {
           System.out.println("cant_Wq: "+EC.Cant_Wq);
           System.out.println("--------------------------");
           
-          proceso.RegistrarEvento("\n");
-          proceso.RegistrarEvento("-----EVENTO------");
-          proceso.RegistrarEvento("NroEvento: "+Integer.toString(this.num_evento)+"/ SALIDA / NroCliente:"+Integer.toString(salidaCliente.getNro())+"/");
-          proceso.RegistrarEvento("-----VARIABLES DEL SISTEMA-----");
-          proceso.RegistrarEvento(this.variables.stringVariables());
-          proceso.RegistrarEvento("------LISTA DE EVENTOS-------");
-          proceso.RegistrarEvento(this.evento.printATDT());
-          proceso.RegistrarEvento("-------------FIN---------------- ");
-          proceso.RegistrarEvento("\n");
+          if(this.num_evento<=20){
+            proceso.RegistrarEvento("\n");
+            proceso.RegistrarEvento("-----EVENTO------");
+            proceso.RegistrarEvento("NroEvento: "+Integer.toString(this.num_evento)+"/ SALIDA / NroCliente:"+Integer.toString(salidaCliente.getNro())+"/");
+            proceso.RegistrarEvento("-----VARIABLES DEL SISTEMA-----");
+            proceso.RegistrarEvento(this.variables.stringVariables());
+            proceso.RegistrarEvento("------LISTA DE EVENTOS-------");
+            proceso.RegistrarEvento(this.evento.printATDT());
+            proceso.RegistrarEvento("-------------FIN---------------- ");
+            proceso.RegistrarEvento("\n");
+          }
         }    
            
         this.num_evento=this.num_evento+1;
@@ -272,6 +274,7 @@ public class Sistema {
        System.out.println("------LISTA DE OCUAPCION DE SERVIDORES DE TM: "+tm+" -------");
         
        for(int i=0;i<=this.evento.getLista().size()-1;i++){
+          EC.setTiempoOcupado(i,tm-EC.getTiempoDesocupado(i));
           System.out.println("Servidor "+i+"con Ocupacion de: "+(EC.getTiempoOcupado(i))+"%");
        }
        
@@ -288,10 +291,12 @@ public class Sistema {
        EC.setCantSinEspera(cantSinEspera);
        EC.setCantCola(cantCola);
        EC.setNoAtendidos(this.variables.getWL());
-       EC.CalcularCostos();
+       EC.CalcularCostos(tm);
        proceso.setEC(EC);
       
     }
+    
+    
     
   
 }

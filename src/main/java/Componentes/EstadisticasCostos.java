@@ -15,13 +15,13 @@ public class EstadisticasCostos {
     Integer Tm_max=0;
     Integer Max_C=0;
     Double L=0.0;
-    Integer Cant_L=0;
+    long Cant_L=0;
     Double Lq=0.0;
-    Integer Cant_Lq=0;
+    long Cant_Lq=0;
     Double W=0.0;
-    Integer Cant_W=0;
+    long Cant_W=0;
     Double Wq=0.0;
-    Integer Cant_Wq=0;
+    long Cant_Wq=0;
     Integer numSer=0;
     Integer cantCola=0;
     Integer cantSinEspera=0;
@@ -130,10 +130,11 @@ public class EstadisticasCostos {
         for(int i=0;i<this.numSer;i++){
           double a=this.lista_STOcupado.get(i)*1.0;
           this.porcentajeUtilizacion.set(i,(Double) (a/tm)*100);
+          System.out.println("Servidor: "+i+"/"+this.lista_STOcupado.get(i)*1.0);
         }
     }
     
-    public int Acumular_L(int cantcTM){
+    public long Acumular_L(int cantcTM){
         System.out.println("Sumar: cantcTm"+cantcTM+" + L:"+this.Cant_L);
         return this.Cant_L=this.Cant_L+cantcTM;
     }
@@ -142,7 +143,7 @@ public class EstadisticasCostos {
        return this.L=(this.Cant_L*1.0)/(tm*1.0);
     }
     
-    public int Acumular_Lq(int cantcTM){
+    public long Acumular_Lq(int cantcTM){
           System.out.println("Sumar: cantcTM:"+cantcTM+" + Lq:"+this.Cant_Lq);
         return this.Cant_Lq=this.Cant_Lq+cantcTM;
     }
@@ -151,7 +152,7 @@ public class EstadisticasCostos {
         return this.Lq=(this.Cant_Lq*1.0)/(tm*1.0);
     }
     
-    public int Acumular_W(int tm){
+    public long Acumular_W(int tm){
         return this.Cant_W=this.Cant_W+tm;
     }
     
@@ -159,7 +160,7 @@ public class EstadisticasCostos {
         return this.W=(this.Cant_W*1.0)/(cantC*1.0);
     }
     
-    public int Acumular_Wq(int tm){
+    public long Acumular_Wq(int tm){
         return this.Cant_Wq=this.Cant_Wq+tm;
     }
     
@@ -167,12 +168,12 @@ public class EstadisticasCostos {
         return this.Wq=this.Cant_Wq*1.0/cantC*1.0;
     }
     
-    public void CalcularCostos(){
+    public void CalcularCostos(int tm){
        this.resul_TS=this.W*this.costo_TS;
        this.resul_TW=this.Wq*this.costo_TW;
        for(int i=0;i<this.numSer;i++){
-           this.resulCostoPUOcupado.add((this.porcentajeUtilizacion.get(i)/100.0)*this.costo_Ocupado);
-           this.resulCostoPUDesocupado.add(((100.0-this.porcentajeUtilizacion.get(i))/100.0)*this.costo_Desocupado);
+           this.resulCostoPUOcupado.add((this.porcentajeUtilizacion.get(i)/100.0)*this.costo_Ocupado*tm);
+           this.resulCostoPUDesocupado.add(((100.0-this.porcentajeUtilizacion.get(i))/100.0)*this.costo_Desocupado*tm);
        }
     }
     
@@ -223,7 +224,7 @@ public class EstadisticasCostos {
       
        return "\nCantidad de clientes que no esperan: "+this.cantSinEspera+"\n"
               +"\nCantidad de clientes que se van sin ser antendidos: "+this.cantNoAtendidos+"\n"
-              +"\nProbabilidad de esperar: "+this.ProEspera+"\n"
+              +"\nProbabilidad de esperar: "+this.ProEspera*100+"\n"
               +"\nCantidad promedio de clientes en sistema: "+this.L+"\n"
               +"\nCantidad promedio de clientes en cola: "+this.Lq+"\n"
               +"\nTiempo promedio de un cliente en sistema: "+this.W+"\n"

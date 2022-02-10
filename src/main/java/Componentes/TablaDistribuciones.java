@@ -29,6 +29,28 @@ public class TablaDistribuciones {
        this.probabilidades=new ArrayList<Double>();
    };
    
+   public void resetTabla(){
+      this.tabla=new ArrayList<Distribuciones>();
+   }
+   
+   public double getProAcum(){
+      return this.proAcum;
+   }
+   
+   public void setTiempo(int i,int t,double p){
+      this.tiempos.set(i,t);
+      this.tiempos.get(i);
+      this.probabilidades.set(i, p);
+      System.out.println(this.probabilidades.get(i)+" / "+this.tiempos.get(i));
+    }
+   
+   public void removeTiempo(){
+     this.proAcum=this.proAcum-this.probabilidades.get(this.probabilidades.size()-1);
+     this.tiempos.remove(this.tiempos.size()-1);
+     this.probabilidades.remove(this.probabilidades.size()-1);
+     
+   }
+   
    public void addTiempo(int t,double p){
        System.out.println("probabilidad: "+p+" tiempo: "+t);
        System.out.println("acum "+proAcum);

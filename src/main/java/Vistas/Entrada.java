@@ -8,6 +8,9 @@ import Componentes.ManejoArchivo;
 import Componentes.TablaDistribuciones;
 import Componentes.Sistema;
 import Componentes.EstadisticasCostos;
+import Funciones.Alerta;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 /**
  *
  * @author USUARIO
@@ -24,6 +27,7 @@ public class Entrada extends javax.swing.JFrame {
     public Entrada() {
         initComponents();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -48,10 +52,6 @@ public class Entrada extends javax.swing.JFrame {
         TF_NumClientes = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        TextArea_Llegada = new javax.swing.JTextArea();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        TextArea_Servicio = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         Cargar_Llegada = new javax.swing.JButton();
         Cargar_Servicio = new javax.swing.JButton();
@@ -72,6 +72,16 @@ public class Entrada extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         Cargar_Datos = new javax.swing.JButton();
         Guardar_Datos = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        Table_TLLegadas = new javax.swing.JTable();
+        Actualizar_TablaLL = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        Table_TSalidas = new javax.swing.JTable();
+        Actualizar_TablaS = new javax.swing.JButton();
+        Quitar_FilaTll = new javax.swing.JButton();
+        Agregar_FilaTll = new javax.swing.JButton();
+        Quitar_FilaTS = new javax.swing.JButton();
+        Agregar_FilaTS = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,15 +138,6 @@ public class Entrada extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Yu Gothic", 1, 14)); // NOI18N
         jLabel10.setText("Tiempo de servicio:");
-
-        TextArea_Llegada.setEditable(false);
-        TextArea_Llegada.setColumns(20);
-        TextArea_Llegada.setRows(5);
-        jScrollPane2.setViewportView(TextArea_Llegada);
-
-        TextArea_Servicio.setColumns(20);
-        TextArea_Servicio.setRows(5);
-        jScrollPane1.setViewportView(TextArea_Servicio);
 
         jButton1.setText("Empezar simulacion");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -253,6 +254,84 @@ public class Entrada extends javax.swing.JFrame {
             }
         });
 
+        Table_TLLegadas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Valor", "Porcentaje", "P.Acumulado", "Rango"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(Table_TLLegadas);
+
+        Actualizar_TablaLL.setText("Actualizar");
+        Actualizar_TablaLL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Actualizar_TablaLLDis(evt);
+            }
+        });
+
+        Table_TSalidas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Valor", "Porcentaje", "P.Acumulado", "Rango"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(Table_TSalidas);
+
+        Actualizar_TablaS.setText("Actualizar");
+        Actualizar_TablaS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Actualizar_TablaSDis(evt);
+            }
+        });
+
+        Quitar_FilaTll.setText("Quitar");
+        Quitar_FilaTll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                quitarFilaTll(evt);
+            }
+        });
+
+        Agregar_FilaTll.setText("Agregar");
+        Agregar_FilaTll.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                agregarFilaTll(evt);
+            }
+        });
+
+        Quitar_FilaTS.setText("Quitar");
+        Quitar_FilaTS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                quitarFilaTS(evt);
+            }
+        });
+
+        Agregar_FilaTS.setText("Agregar");
+        Agregar_FilaTS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                agregarFilaTS(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -261,91 +340,103 @@ public class Entrada extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(47, 47, 47)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(37, 37, 37)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel6)))
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel8)
-                                        .addComponent(jLabel7)))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel8))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TF_NumClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(Unidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(TF_TiempoSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(TF_NumServidores, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(TF_TiempoSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(113, 113, 113)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel13)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(TF_CostoDesocupado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jLabel11)
-                                                    .addComponent(jLabel14))
+                                                    .addComponent(jLabel14)
+                                                    .addComponent(jLabel12))
                                                 .addGap(21, 21, 21)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                     .addComponent(TF_CostoTW, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(TF_CostoTS, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addComponent(TF_CostoTS, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(TF_CostoOcupado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addGap(99, 99, 99)
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                                         .addComponent(jLabel17)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                                                         .addComponent(TF_CostoONormal, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                                         .addComponent(jLabel15)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(TF_CostoTExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                        .addComponent(TF_CostoTExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                                        .addComponent(jLabel16)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(TF_CostoSisTExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel12)
-                                                .addGap(34, 34, 34)
-                                                .addComponent(TF_CostoOcupado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(99, 99, 99)
-                                                .addComponent(jLabel16)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(TF_CostoSisTExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton1)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(jLabel9)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(Cargar_Llegada))))
-                                .addGap(49, 49, 49)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel13)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(TF_CostoDesocupado, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE))))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(Cargar_Servicio)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(58, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(354, 354, 354))
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(TF_NumClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(TF_NumServidores, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jLabel1))
+                        .addContainerGap(58, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addGap(354, 354, 354))))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(379, 379, 379)
-                .addComponent(Cargar_Datos)
                 .addGap(18, 18, 18)
-                .addComponent(Guardar_Datos)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Cargar_Llegada)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Actualizar_TablaLL)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Quitar_FilaTll)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Agregar_FilaTll)
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Cargar_Servicio)
+                        .addGap(18, 18, 18)
+                        .addComponent(Actualizar_TablaS)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Quitar_FilaTS)
+                        .addGap(18, 18, 18)
+                        .addComponent(Agregar_FilaTS))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(379, 379, 379)
+                        .addComponent(Cargar_Datos)
+                        .addGap(18, 18, 18)
+                        .addComponent(Guardar_Datos))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(413, 413, 413)
+                        .addComponent(jButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -380,7 +471,7 @@ public class Entrada extends javax.swing.JFrame {
                     .addComponent(TF_CostoTW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17)
                     .addComponent(TF_CostoONormal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(TF_NumClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -388,27 +479,34 @@ public class Entrada extends javax.swing.JFrame {
                     .addComponent(TF_CostoOcupado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
                     .addComponent(TF_CostoSisTExtra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(TF_NumServidores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel13)
-                    .addComponent(TF_CostoDesocupado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(TF_NumServidores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel13)
+                        .addComponent(TF_CostoDesocupado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel10)
                     .addComponent(Cargar_Llegada)
-                    .addComponent(Cargar_Servicio))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(Actualizar_TablaLL)
+                    .addComponent(jLabel10)
+                    .addComponent(Cargar_Servicio)
+                    .addComponent(Actualizar_TablaS)
+                    .addComponent(Quitar_FilaTll)
+                    .addComponent(Agregar_FilaTll)
+                    .addComponent(Quitar_FilaTS)
+                    .addComponent(Agregar_FilaTS))
+                .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(64, 64, 64)
@@ -440,7 +538,20 @@ public class Entrada extends javax.swing.JFrame {
         ManejoArchivo M=new ManejoArchivo();
         M.leerArchivoLlegadas();
         this.tablaLlegadasA=M.getTablaLlegadas();
-        this.TextArea_Llegada.setText(this.tablaLlegadasA.toString());
+    
+        DefaultTableModel model =(DefaultTableModel) this.Table_TLLegadas.getModel();
+        model.setRowCount(0);
+        for(int i=0;i<this.tablaLlegadasA.getTabla().size();i++){
+       
+           Object[] fila = {this.tablaLlegadasA.getTabla().get(i).getTiempo(),
+                           this.tablaLlegadasA.getTabla().get(i).getProbabilidad(), 
+                           this.tablaLlegadasA.getTabla().get(i).getProbabilidadAcumulada(),
+                           "("+this.tablaLlegadasA.getTabla().get(i).getValorMin()+","+this.tablaLlegadasA.getTabla().get(i).getValorMax()+")"};
+           
+           model.addRow(fila);
+        }
+      
+        
     }//GEN-LAST:event_CargarArchivoLLegada
 
     private void cargarArchivoServicio(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cargarArchivoServicio
@@ -448,7 +559,20 @@ public class Entrada extends javax.swing.JFrame {
         ManejoArchivo M=new ManejoArchivo();
         M.leerArchivoServicios(0);
         this.tablaServidoresA=M.getTablaServicio();
-        this.TextArea_Servicio.setText(this.tablaServidoresA.toString());
+      
+        DefaultTableModel model =(DefaultTableModel) this.Table_TSalidas.getModel();
+        model.setRowCount(0);
+        for(int i=0;i<this.tablaServidoresA.getTabla().size();i++){
+       
+           Object[] fila = {this.tablaServidoresA.getTabla().get(i).getTiempo(),
+                           this.tablaServidoresA.getTabla().get(i).getProbabilidad(), 
+                           this.tablaServidoresA.getTabla().get(i).getProbabilidadAcumulada(),
+                           "("+this.tablaServidoresA.getTabla().get(i).getValorMin()+","+this.tablaServidoresA.getTabla().get(i).getValorMax()+")"};
+           
+           model.addRow(fila);
+        }
+      
+     
     }//GEN-LAST:event_cargarArchivoServicio
 
     private void checkisNumber(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_checkisNumber
@@ -506,7 +630,21 @@ public class Entrada extends javax.swing.JFrame {
          this.TF_CostoSisTExtra.setText(Integer.toString(M.CostoSisExtra));
          
     }//GEN-LAST:event_Cargar_ArchivoDatos
-
+    private String escribirTablaTLL(){
+       String a=""; 
+       for(int i=0;i<this.tablaLlegadasA.getTabla().size();i++){
+         a=a+this.tablaLlegadasA.getTabla().get(i).getTiempo()+" "+this.tablaLlegadasA.getTabla().get(i).getProbabilidad()+" \n";
+       }
+       return a;
+    }
+    
+    private String escribirTablaTS(){
+       String a=""; 
+       for(int i=0;i<this.tablaServidoresA.getTabla().size();i++){
+         a=a+this.tablaServidoresA.getTabla().get(i).getTiempo()+" "+this.tablaServidoresA.getTabla().get(i).getProbabilidad()+" \n";
+       }
+       return a;
+    }
     private void guardar_ArchivoEntrada(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_guardar_ArchivoEntrada
         // TODO add your handling code here:
         ManejoArchivo M=new ManejoArchivo();
@@ -516,7 +654,7 @@ public class Entrada extends javax.swing.JFrame {
           +"MaxC\n"
           +this.TF_NumClientes.getText()+"\n"
           +"MaxS\n"
-          +this.TF_NumClientes.getText()+"\n"        
+          +this.TF_NumServidores.getText()+"\n"        
           +"CostoTS\n"
           +this.TF_CostoTS.getText()+"\n"
           +"CostoTW\n"
@@ -525,19 +663,180 @@ public class Entrada extends javax.swing.JFrame {
           +this.TF_CostoOcupado.getText()+"\n"
           +"CostoSDO\n"
           +this.TF_CostoDesocupado.getText()+"\n"
-          +"CostoExtra\n"
+          +"CostoTExtra\n"
           +this.TF_CostoTExtra.getText()+"\n"
           +"CostoOPNormal\n"
           +this.TF_CostoONormal.getText()+"\n"
           +"CostoSisExtra\n"
           +this.TF_CostoSisTExtra.getText()+"\n"  
-          +"Tiempo entre Llegadas\n"
-          +"Tiempo de Servicio\n"      
+          +"Tiempos entre Llegadas\n"
+          +escribirTablaTLL()        
+          +"Tiempos de Servicio\n"
+          +escribirTablaTS()      
         );
     }//GEN-LAST:event_guardar_ArchivoEntrada
 
+    private void Actualizar_TablaLLDis(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Actualizar_TablaLLDis
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) this.Table_TLLegadas.getModel();
+        Double pAcum=0.0;
+        for(int i=0;i<this.tablaLlegadasA.getTabla().size();i++)
+            pAcum=pAcum+(Double) this.Table_TLLegadas.getValueAt(i,1);
+        if(pAcum<=100){
+            for(int i=0;i<this.tablaLlegadasA.getTabla().size();i++){
+                 System.out.println(this.Table_TLLegadas.getValueAt(i,0)+" / "+this.Table_TLLegadas.getValueAt(i,1));
+                 int t=(Integer )this.Table_TLLegadas.getValueAt(i,0);
+                 Double p=(Double) this.Table_TLLegadas.getValueAt(i,1);
+                 this.tablaLlegadasA.setTiempo(i, t,p);
+            }
+            this.tablaLlegadasA.resetTabla();
+            this.tablaLlegadasA.generarTabla();
+            model.setRowCount(0);
+
+            for(int i=0;i<this.tablaLlegadasA.getTabla().size();i++){
+                   Object[] fila = {this.tablaLlegadasA.getTabla().get(i).getTiempo(),
+                               this.tablaLlegadasA.getTabla().get(i).getProbabilidad(), 
+                               this.tablaLlegadasA.getTabla().get(i).getProbabilidadAcumulada(),
+                               "("+this.tablaLlegadasA.getTabla().get(i).getValorMin()+","+this.tablaLlegadasA.getTabla().get(i).getValorMax()+")"};
+
+                 model.addRow(fila);
+            }
+        }
+        else{
+          model.setRowCount(0);  
+          for(int i=0;i<this.tablaLlegadasA.getTabla().size();i++){
+                   Object[] fila = {this.tablaLlegadasA.getTabla().get(i).getTiempo(),
+                               this.tablaLlegadasA.getTabla().get(i).getProbabilidad(), 
+                               this.tablaLlegadasA.getTabla().get(i).getProbabilidadAcumulada(),
+                               "("+this.tablaLlegadasA.getTabla().get(i).getValorMin()+","+this.tablaLlegadasA.getTabla().get(i).getValorMax()+")"};
+
+                 model.addRow(fila);
+            }
+          Alerta.mensajeError("La probabilidad acumulada ha llegado al 100% ");
+        }  
+        
+    }//GEN-LAST:event_Actualizar_TablaLLDis
+
+    private void Actualizar_TablaSDis(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Actualizar_TablaSDis
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) this.Table_TSalidas.getModel();
+        Double pAcum=0.0;
+        for(int i=0;i<this.tablaServidoresA.getTabla().size();i++)
+            pAcum=pAcum+(Double) this.Table_TSalidas.getValueAt(i,1);
+        if(pAcum<=100){
+        
+            for(int i=0;i<this.tablaServidoresA.getTabla().size();i++){
+                 System.out.println(this.Table_TSalidas.getValueAt(i,0)+" / "+this.Table_TSalidas.getValueAt(i,1));
+                 int t=(Integer )this.Table_TSalidas.getValueAt(i,0);
+                 Double p=(Double) this.Table_TSalidas.getValueAt(i,1);
+                 this.tablaServidoresA.setTiempo(i, t,p);
+            }
+            this.tablaServidoresA.resetTabla();
+            this.tablaServidoresA.generarTabla();
+            model.setRowCount(0);
+
+            for(int i=0;i<this.tablaServidoresA.getTabla().size();i++){
+                   Object[] fila = {this.tablaServidoresA.getTabla().get(i).getTiempo(),
+                               this.tablaServidoresA.getTabla().get(i).getProbabilidad(), 
+                               this.tablaServidoresA.getTabla().get(i).getProbabilidadAcumulada(),
+                               "("+this.tablaServidoresA.getTabla().get(i).getValorMin()+","+this.tablaServidoresA.getTabla().get(i).getValorMax()+")"};
+
+                 model.addRow(fila);
+            }
+        }
+    }//GEN-LAST:event_Actualizar_TablaSDis
+
+    private void quitarFilaTll(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitarFilaTll
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) this.Table_TLLegadas.getModel();
+        model.setRowCount(model.getRowCount()-1);
+        this.tablaLlegadasA.removeTiempo();
+        for(int i=0;i<model.getRowCount();i++){
+             System.out.println(this.Table_TLLegadas.getValueAt(i,0)+" / "+this.Table_TLLegadas.getValueAt(i,1));
+             int t=(Integer )this.Table_TLLegadas.getValueAt(i,0);
+             Double p=(Double) this.Table_TLLegadas.getValueAt(i,1);
+             this.tablaLlegadasA.setTiempo(i, t,p);
+        }
+        this.tablaLlegadasA.resetTabla();
+        this.tablaLlegadasA.generarTabla();
+        model.setRowCount(0);
+      
+        for(int i=0;i<this.tablaLlegadasA.getTabla().size();i++){
+               Object[] fila = {this.tablaLlegadasA.getTabla().get(i).getTiempo(),
+                           this.tablaLlegadasA.getTabla().get(i).getProbabilidad(), 
+                           this.tablaLlegadasA.getTabla().get(i).getProbabilidadAcumulada(),
+                           "("+this.tablaLlegadasA.getTabla().get(i).getValorMin()+","+this.tablaLlegadasA.getTabla().get(i).getValorMax()+")"};
+           
+             model.addRow(fila);
+        }
+    }//GEN-LAST:event_quitarFilaTll
+
+    private void agregarFilaTll(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarFilaTll
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) this.Table_TLLegadas.getModel();
+        this.tablaLlegadasA.addTiempo(1,5);
+        if(this.tablaLlegadasA.getProAcum()<100){ 
+            this.tablaLlegadasA.resetTabla();
+            this.tablaLlegadasA.generarTabla();
+            model.setRowCount(0);
+
+            for(int i=0;i<this.tablaLlegadasA.getTabla().size();i++){
+                   Object[] fila = {this.tablaLlegadasA.getTabla().get(i).getTiempo(),
+                               this.tablaLlegadasA.getTabla().get(i).getProbabilidad(), 
+                               this.tablaLlegadasA.getTabla().get(i).getProbabilidadAcumulada(),
+                               "("+this.tablaLlegadasA.getTabla().get(i).getValorMin()+","+this.tablaLlegadasA.getTabla().get(i).getValorMax()+")"};
+
+                 model.addRow(fila);
+            }
+        }
+    }//GEN-LAST:event_agregarFilaTll
+
+    private void quitarFilaTS(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quitarFilaTS
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) this.Table_TSalidas.getModel();
+        model.setRowCount(model.getRowCount()-1);
+        this.tablaServidoresA.removeTiempo();
+        for(int i=0;i<model.getRowCount();i++){
+             System.out.println(this.Table_TSalidas.getValueAt(i,0)+" / "+this.Table_TSalidas.getValueAt(i,1));
+             int t=(Integer )this.Table_TSalidas.getValueAt(i,0);
+             Double p=(Double) this.Table_TSalidas.getValueAt(i,1);
+             this.tablaLlegadasA.setTiempo(i, t,p);
+        }
+        this.tablaLlegadasA.resetTabla();
+        this.tablaLlegadasA.generarTabla();
+        model.setRowCount(0);
+      
+        for(int i=0;i<this.tablaServidoresA.getTabla().size();i++){
+               Object[] fila = {this.tablaServidoresA.getTabla().get(i).getTiempo(),
+                           this.tablaServidoresA.getTabla().get(i).getProbabilidad(), 
+                           this.tablaServidoresA.getTabla().get(i).getProbabilidadAcumulada(),
+                           "("+this.tablaServidoresA.getTabla().get(i).getValorMin()+","+this.tablaServidoresA.getTabla().get(i).getValorMax()+")"};
+           
+             model.addRow(fila);
+        }
+    }//GEN-LAST:event_quitarFilaTS
+
+    private void agregarFilaTS(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarFilaTS
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) this.Table_TSalidas.getModel();
+        this.tablaServidoresA.addTiempo(1,5);
+        if(this.tablaServidoresA.getProAcum()<100){ 
+            this.tablaServidoresA.resetTabla();
+            this.tablaServidoresA.generarTabla();
+            model.setRowCount(0);
+
+            for(int i=0;i<this.tablaServidoresA.getTabla().size();i++){
+                   Object[] fila = {this.tablaServidoresA.getTabla().get(i).getTiempo(),
+                               this.tablaServidoresA.getTabla().get(i).getProbabilidad(), 
+                               this.tablaServidoresA.getTabla().get(i).getProbabilidadAcumulada(),
+                               "("+this.tablaServidoresA.getTabla().get(i).getValorMin()+","+this.tablaServidoresA.getTabla().get(i).getValorMax()+")"};
+
+                 model.addRow(fila);
+            }
+        }
+    }//GEN-LAST:event_agregarFilaTS
+
     /**
-     * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -572,10 +871,16 @@ public class Entrada extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Actualizar_TablaLL;
+    private javax.swing.JButton Actualizar_TablaS;
+    private javax.swing.JButton Agregar_FilaTS;
+    private javax.swing.JButton Agregar_FilaTll;
     private javax.swing.JButton Cargar_Datos;
     private javax.swing.JButton Cargar_Llegada;
     private javax.swing.JButton Cargar_Servicio;
     private javax.swing.JButton Guardar_Datos;
+    private javax.swing.JButton Quitar_FilaTS;
+    private javax.swing.JButton Quitar_FilaTll;
     private javax.swing.JTextField TF_CostoDesocupado;
     private javax.swing.JTextField TF_CostoONormal;
     private javax.swing.JTextField TF_CostoOcupado;
@@ -586,8 +891,8 @@ public class Entrada extends javax.swing.JFrame {
     private javax.swing.JTextField TF_NumClientes;
     private javax.swing.JTextField TF_NumServidores;
     private javax.swing.JTextField TF_TiempoSimulacion;
-    private javax.swing.JTextArea TextArea_Llegada;
-    private javax.swing.JTextArea TextArea_Servicio;
+    private javax.swing.JTable Table_TLLegadas;
+    private javax.swing.JTable Table_TSalidas;
     private javax.swing.JComboBox<String> Unidad;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
@@ -608,7 +913,7 @@ public class Entrada extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     // End of variables declaration//GEN-END:variables
 }

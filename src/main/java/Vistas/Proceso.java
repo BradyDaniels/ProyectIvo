@@ -12,7 +12,7 @@ import Componentes.EstadisticasCostos;
  */
 public class Proceso extends javax.swing.JFrame {
     EstadisticasCostos EC;
-    
+    int NroEvento=0;
 
     /**
      * Creates new form Proceso
@@ -142,6 +142,7 @@ public class Proceso extends javax.swing.JFrame {
     }
     public void RegistrarEvento(String evento){
         TextArea_Proceso.append(evento+"\n");
+   
          
     };
 

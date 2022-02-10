@@ -1,5 +1,5 @@
 Tm
-30
+972000
 MaxC
 0
 MaxS
@@ -7,27 +7,26 @@ MaxS
 CostoTS
 10
 CostoTW
-6
+20
 CostoSO
-8
+4
 CostoSDO
-9
+120
 CostoTExtra
-10
+0
 CostoOPNormal
-9
+0
 CostoSisExtra
-10
+0
 Tiempos entre Llegadas
-1 30
-2 20
-3 20
-4 20 
-5 10 
-
+3 15.0 
+5 30.0 
+7 35.0 
+8 10.0 
+9 10.0 
 Tiempos de Servicio
-2 30
-3 20
-4 10
-5 30
-6 10
+15 10.0 
+17 30.0 
+20 25.0 
+25 35.0 
+
